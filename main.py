@@ -20,11 +20,11 @@ black_locations = [(0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7
                    (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6)]
 captured_pieces_white = []
 captured_pieces_black = []
-# 0 - whites turn no selection: 1-whites turn piece selected: 2- black turn no selection, 3 - black turn piece selected
+# 0 - white turn no sel, 1-white turn piece sel, 2- black turn no selec, 3 - black turn piece sel
 turn_step = 0
 selection = 100
 valid_moves = []
-# load in game piece images (queen, king, rook, bishop, knight, pawn) x 2
+# game piece images
 black_queen = pygame.image.load('assets/images/black queen.png')
 black_queen = pygame.transform.scale(black_queen, (80, 80))
 black_queen_small = pygame.transform.scale(black_queen, (45, 45))
@@ -69,13 +69,13 @@ black_images = [black_pawn, black_queen, black_king, black_knight, black_rook, b
 small_black_images = [black_pawn_small, black_queen_small, black_king_small, black_knight_small,
                       black_rook_small, black_bishop_small]
 piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
-# check variables/ flashing counter
+# check variables nd flashing counter
 counter = 0
 winner = ''
 game_over = False
 
 
-# draw main game board
+# main game board
 def draw_board():
     for i in range(32):
         column = i % 4
@@ -96,7 +96,7 @@ def draw_board():
         screen.blit(medium_font.render('FORFEIT', True, 'black'), (810, 830))
 
 
-# draw pieces onto board
+# pieces on board
 def draw_pieces():
     for i in range(len(white_pieces)):
         index = piece_list.index(white_pieces[i])
@@ -121,7 +121,7 @@ def draw_pieces():
                                                   100, 100], 2)
 
 
-# function to check all pieces valid options on board
+# func - check all pieces valid
 def check_options(pieces, locations, turn):
     moves_list = []
     all_moves_list = []
@@ -144,7 +144,7 @@ def check_options(pieces, locations, turn):
     return all_moves_list
 
 
-# check king valid moves
+# king moves
 def check_king(position, color):
     moves_list = []
     if color == 'white':
@@ -162,7 +162,7 @@ def check_king(position, color):
     return moves_list
 
 
-# check queen valid moves
+# queen moves
 def check_queen(position, color):
     moves_list = check_bishop(position, color)
     second_list = check_rook(position, color)
@@ -171,7 +171,7 @@ def check_queen(position, color):
     return moves_list
 
 
-# check bishop moves
+#  bishop moves
 def check_bishop(position, color):
     moves_list = []
     if color == 'white':
@@ -180,7 +180,7 @@ def check_bishop(position, color):
     else:
         friends_list = black_locations
         enemies_list = white_locations
-    for i in range(4):  # up-right, up-left, down-right, down-left
+    for i in range(4):  # up-right nd left, down-right ndleft
         path = True
         chain = 1
         if i == 0:
@@ -321,7 +321,7 @@ def draw_captured():
         screen.blit(small_white_images[index], (925, 5 + 50 * i))
 
 
-# draw a flashing square around king if in check
+# flashing square around king if in check
 def draw_check():
     if turn_step < 2:
         if 'king' in white_pieces:
